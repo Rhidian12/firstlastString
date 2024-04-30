@@ -1,0 +1,42 @@
+<pre class='metadata'>
+Title: DOCUMENT NUMBER? Adding .first() and .last() to strings
+Shortname: Adding .first() and .last() to strings
+Level: 0
+Status: iso/D
+Group: EWG
+URL: TBA
+Editor: rhidiandewit@gmail.com
+Abstract: C++ has a lot of nice utility functions in its `std::string` library, but the richness of the API can be even more improved.
+Markup Shorthands: markdown yes, css no
+Boilerplate: omit conformance, copyright no
+Default Highlight: cpp
+</pre>
+
+Table of Contents {#tableofcontents}
+========
+- [Changelog](#changelog)
+	- \[R0](#r0)
+- [Motivation And Scope](#motivation)
+- [Impact on the Standard](#impact)
+
+[Changelog](#changelog)
+========
+## R0 ## {#r0}
+- Initial revision
+
+Motivation and Scope {#motivation}
+========
+The `std::string` (and `std::string_view`) api has a lot of nice features and utility functions, but can be improved even further.
+Currently, to get the first `N` characters of a string, we need to do `std::string::substr(0, N)`. This is fine, but people might be confused as to the usage of the `0` in the function call.
+Similarly, to get the last `N` characters of a string, we need to do `std::string::substr(size() - N, N)`. This is also fine, but again, the first parameter could lead to confusion, or even a possible error if the wrong number were passed.
+
+To facilitate these simple operations, I suggest adding `std::string::first()` and `std::string::last()` (and similar counterparts to `std::string_view`).
+Having these 2 utility functions brings a couple of benefits:
+
+1. It is more obvious and clear what the programmer intent is, `.first(N)` conveys better meaning as opposed to `.substr(0, N)`, same for `.last(N)` and `.substr(size() - N, N)`
+2. Since there are less arguments, and the argument is only a count, there is less potential for programmer error
+3. It is generally simpler and less typing.
+
+Impact on the Standard {#impact}
+========
+These are 2 minor utility functions to be added to the STL, not impacting any existing code, so the impact on the standard is minimal.
