@@ -15,12 +15,18 @@ Default Highlight: cpp
 Table of Contents {#tableofcontents}
 ========
 - [Changelog](#changelog)
+	- \[R1](#r1)
 	- \[R0](#r0)
 - [Motivation And Scope](#motivation)
 - [Impact on the Standard](#impact)
+- [Technical Specifications](#technical)
 
 [Changelog](#changelog)
 ========
+## R1 ## {#r1}
+- Add more to Motivation and Scope
+- 
+
 ## R0 ## {#r0}
 - Initial revision
 
@@ -37,6 +43,24 @@ Having these 2 utility functions brings a couple of benefits:
 2. Since there are less arguments, and the argument is only a count, there is less potential for programmer error
 3. It is generally simpler and less typing.
 
+There is the argument of the `std::string` API already being far too large, and this being only a minor addition.
+Although this is true, the `std::string` API has some weird missing features, and the richness of the API is important, currently, programmers are often forced to make small utility functions themselves to do trivial operations on a string that should be part of the STL.
+
 Impact on the Standard {#impact}
 ========
-These are 2 minor utility functions to be added to the STL, not impacting any existing code, so the impact on the standard is minimal.
+These are 2 minor utility functions to be added to the `std::string` and `std::string_view` API, not impacting any existing code, so the impact on the standard is minimal.
+
+Technical Specifications {#technical}
+========
+1. `std::basic_string::first()` takes 1 parameter: `size_t count`, returns a `std::basic_string` and has a `noexcept` guarantee.
+	- `count` is the amount of characters to included, starting from the start of the original string.
+		- Determines the effective length of `count` as `std::min(count, size())`
+2. `std::basic_string::last()` takes 1 parameter: `size_t count`, returns a `std::basic_string` and has a `noexcept` guarantee.
+	- `count` is the amount of characters to be included, starting from the end of the original string.
+		- Determines the effective length of `count` as `std::min(count, size())`
+3. `std::basic_string_view::first()` takes 1 parameter: `size_t count`, returns a `std::basic_string_view` and has a `noexcept` guarantee.
+	- `count` is the amount of characters to included, starting from the start of the original string_view.
+		- Determines the effective length of `count` as `std::min(count, size())`
+4. `std::basic_string_view::last()` takes 1 parameter: `size_t count`, returns a `std::basic_string_view` and has a `noexcept` guarantee.
+	- `count` is the amount of characters to be included, starting from the end of the original string_view.
+		- Determines the effective length of `count` as `std::min(count, size())`
