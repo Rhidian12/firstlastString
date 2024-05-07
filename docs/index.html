@@ -2014,7 +2014,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">DOCUMENT NUMBER? Adding .first() and .last() to strings</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Draft Proposal, <time class="dt-updated" datetime="2024-04-30">30 April 2024</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Draft Proposal, <time class="dt-updated" datetime="2024-05-06">6 May 2024</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -2038,10 +2038,22 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     <li>
      <a href="#changelog"><span class="secno">2</span> <span class="content"><span>Changelog</span></span></a>
      <ol class="toc">
-      <li><a href="#r0"><span class="secno">2.1</span> <span class="content">R0</span></a>
+      <li><a href="#r1"><span class="secno">2.1</span> <span class="content">R1</span></a>
+      <li><a href="#r0"><span class="secno">2.2</span> <span class="content">R0</span></a>
      </ol>
     <li><a href="#motivation"><span class="secno">3</span> <span class="content">Motivation and Scope</span></a>
     <li><a href="#impact"><span class="secno">4</span> <span class="content">Impact on the Standard</span></a>
+    <li><a href="#technical"><span class="secno">5</span> <span class="content">Technical Specifications</span></a>
+    <li>
+     <a href="#proposedwording"><span class="secno">6</span> <span class="content">Proposed Wording</span></a>
+     <ol class="toc">
+      <li><a href="#additiontostring"><span class="secno">6.1</span> <span class="content">Addition to <code class="highlight"><c- o>&lt;</c-><c- n>string</c-><c- o>></c-></code></span></a>
+      <li><a href="#basicstringfirst"><span class="secno">6.2</span> <span class="content"><code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>basic_string</c-><c- o>::</c-><c- n>first</c-></code></span></a>
+      <li><a href="#basicstringlast"><span class="secno">6.3</span> <span class="content"><code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>basic_string</c-><c- o>::</c-><c- n>last</c-></code></span></a>
+      <li><a href="#additiontostringview"><span class="secno">6.4</span> <span class="content">Addition to <code class="highlight"><c- o>&lt;</c-><c- n>string_view</c-><c- o>></c-></code></span></a>
+      <li><a href="#basicstringviewfirst"><span class="secno">6.5</span> <span class="content"><code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>basic_string_view</c-><c- o>::</c-><c- n>first</c-></code></span></a>
+      <li><a href="#basicstringviewlast"><span class="secno">6.6</span> <span class="content"><code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>basic_string_view</c-><c- o>::</c-><c- n>last</c-></code></span></a>
+     </ol>
    </ol>
   </nav>
   <main>
@@ -2051,15 +2063,44 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
      <p><a href="#changelog">Changelog</a></p>
      <ul>
       <li data-md>
+       <p><a href="#r1">R1</a></p>
+      <li data-md>
        <p><a href="#r0">R0</a></p>
      </ul>
     <li data-md>
      <p><a href="#motivation">Motivation And Scope</a></p>
     <li data-md>
      <p><a href="#impact">Impact on the Standard</a></p>
+    <li data-md>
+     <p><a href="#technical">Technical Specifications</a></p>
+    <li data-md>
+     <p><a href="#proposedwording">Proposed Wording</a></p>
+     <ul>
+      <li data-md>
+       <p><span style="font-family:Georgia, serif;"><a href="#additiontostring">Addition to string</a></span></p>
+      <li data-md>
+       <p><span style="font-family:Georgia, serif;"><a href="#basicstringfirst">std::basic_string::first</a></span></p>
+      <li data-md>
+       <p><span style="font-family:Georgia, serif;"><a href="#basicstringlast">std::basic_string::last</a></span></p>
+      <li data-md>
+       <p><span style="font-family:Georgia, serif;"><a href="#additiontostringview">Addition to string_view</a></span></p>
+      <li data-md>
+       <p><span style="font-family:Georgia, serif;"><a href="#basicstringviewfirst">std::basic_string_view::first</a></span></p>
+      <li data-md>
+       <p><span style="font-family:Georgia, serif;"><a href="#basicstringviewlast">std::basic_string_view::last</a></span></p>
+     </ul>
    </ul>
    <h2 class="heading settled" data-level="2" id="changelog"><span class="secno">2. </span><span class="content"><a href="#changelog">Changelog</a></span><a class="self-link" href="#changelog"></a></h2>
-   <h3 class="heading settled" data-level="2.1" id="r0"><span class="secno">2.1. </span><span class="content">R0</span><a class="self-link" href="#r0"></a></h3>
+   <h3 class="heading settled" data-level="2.1" id="r1"><span class="secno">2.1. </span><span class="content">R1</span><a class="self-link" href="#r1"></a></h3>
+   <ul>
+    <li data-md>
+     <p>Add more to Motivation and Scope</p>
+    <li data-md>
+     <p>Add Technical Specifications</p>
+    <li data-md>
+     <p>Add Proposed Wording</p>
+   </ul>
+   <h3 class="heading settled" data-level="2.2" id="r0"><span class="secno">2.2. </span><span class="content">R0</span><a class="self-link" href="#r0"></a></h3>
    <ul>
     <li data-md>
      <p>Initial revision</p>
@@ -2078,8 +2119,144 @@ Having these 2 utility functions brings a couple of benefits:</p>
     <li data-md>
      <p>It is generally simpler and less typing.</p>
    </ol>
+   <p>There is the argument of the <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>string</c-></code> API already being far too large, and this being only a minor addition.
+Although this is true, the <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>string</c-></code> API has some weird missing features, and the richness of the API is important, currently, programmers are often forced to make small utility functions themselves to do trivial operations on a string that should be part of the STL.</p>
    <h2 class="heading settled" data-level="4" id="impact"><span class="secno">4. </span><span class="content">Impact on the Standard</span><a class="self-link" href="#impact"></a></h2>
-    These are 2 minor utility functions to be added to the STL, not impacting any existing code, so the impact on the standard is minimal. 
+    These are 2 minor utility functions to be added to the <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>string</c-></code> and <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>string_view</c-></code> API, not impacting any existing code, so the impact on the standard is minimal. 
+   <h2 class="heading settled" data-level="5" id="technical"><span class="secno">5. </span><span class="content">Technical Specifications</span><a class="self-link" href="#technical"></a></h2>
+   <ol>
+    <li data-md>
+     <p><code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>basic_string</c-><c- o>::</c-><c- n>first</c-><c- p>()</c-></code> takes 1 parameter: <code class="highlight"><c- b>size_t</c-> <c- n>count</c-></code>, returns a <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>basic_string</c-></code> and has a <code class="highlight"><c- k>noexcept</c-></code> guarantee.</p>
+     <ul>
+      <li data-md>
+       <p><code class="highlight"><c- n>count</c-></code> is the amount of characters to included, starting from the start of the original string.</p>
+       <ul>
+        <li data-md>
+         <p>Determines the effective length of <code class="highlight"><c- n>count</c-></code> as <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>min</c-><c- p>(</c-><c- n>count</c-><c- p>,</c-> <c- n>size</c-><c- p>())</c-></code></p>
+       </ul>
+     </ul>
+    <li data-md>
+     <p><code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>basic_string</c-><c- o>::</c-><c- n>last</c-><c- p>()</c-></code> takes 1 parameter: <code class="highlight"><c- b>size_t</c-> <c- n>count</c-></code>, returns a <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>basic_string</c-></code> and has a <code class="highlight"><c- k>noexcept</c-></code> guarantee.</p>
+     <ul>
+      <li data-md>
+       <p><code class="highlight"><c- n>count</c-></code> is the amount of characters to be included, starting from the end of the original string.</p>
+       <ul>
+        <li data-md>
+         <p>Determines the effective length of <code class="highlight"><c- n>count</c-></code> as <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>min</c-><c- p>(</c-><c- n>count</c-><c- p>,</c-> <c- n>size</c-><c- p>())</c-></code></p>
+       </ul>
+     </ul>
+    <li data-md>
+     <p><code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>basic_string_view</c-><c- o>::</c-><c- n>first</c-><c- p>()</c-></code> takes 1 parameter: <code class="highlight"><c- b>size_t</c-> <c- n>count</c-></code>, returns a <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>basic_string_view</c-></code> and has a <code class="highlight"><c- k>noexcept</c-></code> guarantee.</p>
+     <ul>
+      <li data-md>
+       <p><code class="highlight"><c- n>count</c-></code> is the amount of characters to included, starting from the start of the original string_view.</p>
+       <ul>
+        <li data-md>
+         <p>Determines the effective length of <code class="highlight"><c- n>count</c-></code> as <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>min</c-><c- p>(</c-><c- n>count</c-><c- p>,</c-> <c- n>size</c-><c- p>())</c-></code></p>
+       </ul>
+     </ul>
+    <li data-md>
+     <p><code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>basic_string_view</c-><c- o>::</c-><c- n>last</c-><c- p>()</c-></code> takes 1 parameter: <code class="highlight"><c- b>size_t</c-> <c- n>count</c-></code>, returns a <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>basic_string_view</c-></code> and has a <code class="highlight"><c- k>noexcept</c-></code> guarantee.</p>
+     <ul>
+      <li data-md>
+       <p><code class="highlight"><c- n>count</c-></code> is the amount of characters to be included, starting from the end of the original string_view.</p>
+       <ul>
+        <li data-md>
+         <p>Determines the effective length of <code class="highlight"><c- n>count</c-></code> as <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>min</c-><c- p>(</c-><c- n>count</c-><c- p>,</c-> <c- n>size</c-><c- p>())</c-></code></p>
+       </ul>
+     </ul>
+   </ol>
+   <h2 class="heading settled" data-level="6" id="proposedwording"><span class="secno">6. </span><span class="content">Proposed Wording</span><a class="self-link" href="#proposedwording"></a></h2>
+   <h3 class="heading settled" data-level="6.1" id="additiontostring"><span class="secno">6.1. </span><span class="content">Addition to <code class="highlight"><c- o>&lt;</c-><c- n>string</c-><c- o>></c-></code></span><a class="self-link" href="#additiontostring"></a></h3>
+    Add the following to 23.4.3.1 <a href="https://eel.is/c++draft/basic.string.general">basic.string.general</a>:<br> 
+<pre class="highlight"><c- c1>// [...]</c->
+<c- k>namespace</c-> <c- nn>std</c-> <c- p>{</c->
+  <c- c1>// [...]</c->
+	
+  <c- c1>// [string.ops], string operations</c->
+  <c- c1>// [...]</c->
+	
+  <c- k>constexpr</c-> <c- n>basic_string</c-> <c- nf>first</c-><c- p>(</c-><c- b>size_t</c-> <c- n>count</c-><c- p>)</c-> <c- k>const</c-> <c- k>noexcept</c-><c- p>;</c->
+  <c- k>constexpr</c-> <c- n>basic_string</c-> <c- nf>last</c-><c- p>(</c-><c- b>size_t</c-> <c- n>count</c-><c- p>)</c-> <c- k>const</c-> <c- k>noexcept</c-><c- p>;</c->
+<c- p>}</c->
+</pre>
+   <h3 class="heading settled" data-level="6.2" id="basicstringfirst"><span class="secno">6.2. </span><span class="content"><code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>basic_string</c-><c- o>::</c-><c- n>first</c-></code></span><a class="self-link" href="#basicstringfirst"></a></h3>
+    Add the following subclause to 23.4.3.8 <a href="https://eel.is/c++draft/string.ops">string.ops</a>:<br> 
+   <ul>
+    <li data-md>
+     <p>23.4.3.?: <code class="highlight"><c- n>basic_string</c-><c- o>::</c-><c- n>first</c-></code> <code class="highlight"><c- p>[</c-><c- n>string</c-><c- p>.</c-><c- n>first</c-><c- p>]</c-></code></p>
+     <ul>
+      <li data-md>
+       <p><code class="highlight"><c- k>constexpr</c-> <c- n>basic_string</c-><c- o>&lt;</c-><c- n>charT</c-><c- p>,</c-> <c- n>traits</c-><c- o>></c-> <c- n>first</c-><c- p>(</c-><c- b>size_t</c-> <c- n>count</c-><c- p>)</c-> <c- k>const</c-> <c- k>noexcept</c-><c- p>;</c-></code></p>
+       <ol>
+        <li data-md>
+         <p><em>Effects</em>: Determines the effective length <code class="highlight"><c- n>xlen</c-></code> of the string to be returned as <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>min</c-><c- p>(</c-><c- n>count</c-><c- p>,</c-> <c- n>size</c-><c- p>())</c-></code>.<br> Returns the characters in the range <code class="highlight"><c- p>[</c-><c- n>data</c-><c- p>(),</c-> <c- n>data</c-><c- p>()</c-> <c- o>+</c-> <c- n>xlen</c-><c- p>);</c-></code></p>
+        <li data-md>
+         <p><em>Returns</em>: <code class="highlight"><c- n>basic_string</c-><c- o>&lt;</c-><c- n>charT</c-><c- p>,</c-> <c- n>traits</c-><c- o>></c-><c- p>(</c-><c- n>data</c-><c- p>(),</c-> <c- n>data</c-><c- p>()</c-> <c- o>+</c-> <c- n>xlen</c-><c- p>)</c-></code></p>
+       </ol>
+     </ul>
+   </ul>
+   <h3 class="heading settled" data-level="6.3" id="basicstringlast"><span class="secno">6.3. </span><span class="content"><code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>basic_string</c-><c- o>::</c-><c- n>last</c-></code></span><a class="self-link" href="#basicstringlast"></a></h3>
+    Add the following subclause to 23.4.3.8 <a href="https://eel.is/c++draft/string.ops">string.ops</a>:<br> 
+   <ul>
+    <li data-md>
+     <p>23.4.3.?: <code class="highlight"><c- n>basic_string</c-><c- o>::</c-><c- n>last</c-></code> <code class="highlight"><c- p>[</c-><c- n>string</c-><c- p>.</c-><c- n>last</c-><c- p>]</c-></code></p>
+     <ul>
+      <li data-md>
+       <p><code class="highlight"><c- k>constexpr</c-> <c- n>basic_string</c-><c- o>&lt;</c-><c- n>charT</c-><c- p>,</c-> <c- n>traits</c-><c- o>></c-> <c- n>last</c-><c- p>(</c-><c- b>size_t</c-> <c- n>count</c-><c- p>)</c-> <c- k>const</c-> <c- k>noexcept</c-><c- p>;</c-></code></p>
+       <ol>
+        <li data-md>
+         <p><em>Effects</em>: Determines the effective length <code class="highlight"><c- n>xlen</c-></code> of the string to be returned as <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>min</c-><c- p>(</c-><c- n>count</c-><c- p>,</c-> <c- n>size</c-><c- p>())</c-></code>.<br> Returns the characters in the range <code class="highlight"><c- p>[</c-><c- n>data</c-><c- p>()</c-> <c- o>+</c-> <c- n>size</c-><c- p>()</c-> <c- o>-</c-> <c- n>xlen</c-><c- p>,</c-> <c- n>xlen</c-><c- p>);</c-></code></p>
+        <li data-md>
+         <p><em>Returns</em>: <code class="highlight"><c- n>basic_string</c-><c- o>&lt;</c-><c- n>charT</c-><c- p>,</c-> <c- n>traits</c-><c- o>></c-><c- p>(</c-><c- n>data</c-><c- p>()</c-> <c- o>+</c-> <c- n>size</c-><c- p>()</c-> <c- o>-</c-> <c- n>xlen</c-><c- p>,</c-> <c- n>data</c-><c- p>()</c-> <c- o>+</c-> <c- n>size</c-><c- p>())</c-></code></p>
+       </ol>
+     </ul>
+   </ul>
+   <h3 class="heading settled" data-level="6.4" id="additiontostringview"><span class="secno">6.4. </span><span class="content">Addition to <code class="highlight"><c- o>&lt;</c-><c- n>string_view</c-><c- o>></c-></code></span><a class="self-link" href="#additiontostringview"></a></h3>
+    Add the following to 23.3.3.1 <a href="https://eel.is/c++draft/string.view.template.general">string.view.template.general</a>:<br> 
+<pre class="highlight"><c- c1>// [...]</c->
+<c- k>namespace</c-> <c- nn>std</c-> <c- p>{</c->
+  <c- c1>// [...]</c->
+	
+  <c- c1>// [string.ops], string operations</c->
+  <c- c1>// [...]</c->
+	
+  <c- k>constexpr</c-> <c- n>basic_string_view</c-> <c- nf>first</c-><c- p>(</c-><c- b>size_t</c-> <c- n>count</c-><c- p>)</c-> <c- k>const</c-> <c- k>noexcept</c-><c- p>;</c->
+  <c- k>constexpr</c-> <c- n>basic_string_view</c-> <c- nf>last</c-><c- p>(</c-><c- b>size_t</c-> <c- n>count</c-><c- p>)</c-> <c- k>const</c-> <c- k>noexcept</c-><c- p>;</c->
+<c- p>}</c->
+</pre>
+   <h3 class="heading settled" data-level="6.5" id="basicstringviewfirst"><span class="secno">6.5. </span><span class="content"><code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>basic_string_view</c-><c- o>::</c-><c- n>first</c-></code></span><a class="self-link" href="#basicstringviewfirst"></a></h3>
+    Add the following subclause to 23.3.3.8 <a href="https://eel.is/c++draft/string.view.ops">string.view.ops</a>:<br> 
+   <ul>
+    <li data-md>
+     <p>23.3.3.?: <code class="highlight"><c- n>basic_string_view</c-><c- o>::</c-><c- n>first</c-></code> <code class="highlight"><c- p>[</c-><c- n>string</c-><c- p>.</c-><c- n>first</c-><c- p>]</c-></code></p>
+     <ul>
+      <li data-md>
+       <p><code class="highlight"><c- k>constexpr</c-> <c- n>basic_string_view</c-><c- o>&lt;</c-><c- n>charT</c-><c- p>,</c-> <c- n>traits</c-><c- o>></c-> <c- n>first</c-><c- p>(</c-><c- b>size_t</c-> <c- n>count</c-><c- p>)</c-> <c- k>const</c-> <c- k>noexcept</c-><c- p>;</c-></code></p>
+       <ol>
+        <li data-md>
+         <p><em>Effects</em>: Determines the effective length <code class="highlight"><c- n>xlen</c-></code> of the string to be returned as <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>min</c-><c- p>(</c-><c- n>count</c-><c- p>,</c-> <c- n>size</c-><c- p>())</c-></code>.<br> Returns the characters in the range <code class="highlight"><c- p>[</c-><c- n>data</c-><c- p>(),</c-> <c- n>data</c-><c- p>()</c-> <c- o>+</c-> <c- n>xlen</c-><c- p>);</c-></code></p>
+        <li data-md>
+         <p><em>Returns</em>: <code class="highlight"><c- n>basic_string_view</c-><c- o>&lt;</c-><c- n>charT</c-><c- p>,</c-> <c- n>traits</c-><c- o>></c-><c- p>(</c-><c- n>data</c-><c- p>(),</c-> <c- n>data</c-><c- p>()</c-> <c- o>+</c-> <c- n>xlen</c-><c- p>)</c-></code></p>
+       </ol>
+     </ul>
+   </ul>
+   <h3 class="heading settled" data-level="6.6" id="basicstringviewlast"><span class="secno">6.6. </span><span class="content"><code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>basic_string_view</c-><c- o>::</c-><c- n>last</c-></code></span><a class="self-link" href="#basicstringviewlast"></a></h3>
+    Add the following subclause to 23.3.3.8 <a href="https://eel.is/c++draft/string.view.ops">string.view.ops</a>:<br> 
+   <ul>
+    <li data-md>
+     <p>23.3.3.?: <code class="highlight"><c- n>basic_string_view</c-><c- o>::</c-><c- n>last</c-></code> <code class="highlight"><c- p>[</c-><c- n>string</c-><c- p>.</c-><c- n>last</c-><c- p>]</c-></code></p>
+     <ul>
+      <li data-md>
+       <p><code class="highlight"><c- k>constexpr</c-> <c- n>basic_string_view</c-><c- o>&lt;</c-><c- n>charT</c-><c- p>,</c-> <c- n>traits</c-><c- o>></c-> <c- n>last</c-><c- p>(</c-><c- b>size_t</c-> <c- n>count</c-><c- p>)</c-> <c- k>const</c-> <c- k>noexcept</c-><c- p>;</c-></code></p>
+       <ol>
+        <li data-md>
+         <p><em>Effects</em>: Determines the effective length <code class="highlight"><c- n>xlen</c-></code> of the string to be returned as <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>min</c-><c- p>(</c-><c- n>count</c-><c- p>,</c-> <c- n>size</c-><c- p>())</c-></code>.<br> Returns the characters in the range <code class="highlight"><c- p>[</c-><c- n>data</c-><c- p>()</c-> <c- o>+</c-> <c- n>size</c-><c- p>()</c-> <c- o>-</c-> <c- n>xlen</c-><c- p>,</c-> <c- n>xlen</c-><c- p>);</c-></code></p>
+        <li data-md>
+         <p><em>Returns</em>: <code class="highlight"><c- n>basic_string_view</c-><c- o>&lt;</c-><c- n>charT</c-><c- p>,</c-> <c- n>traits</c-><c- o>></c-><c- p>(</c-><c- n>data</c-><c- p>()</c-> <c- o>+</c-> <c- n>size</c-><c- p>()</c-> <c- o>-</c-> <c- n>xlen</c-><c- p>,</c-> <c- n>data</c-><c- p>()</c-> <c- o>+</c-> <c- n>size</c-><c- p>())</c-></code></p>
+       </ol>
+     </ul>
+   </ul>
   </main>
 <script>
 (function() {

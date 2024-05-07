@@ -15,6 +15,7 @@ Default Highlight: cpp
 Table of Contents {#tableofcontents}
 ========
 - [Changelog](#changelog)
+	- \[R2](#r2)
 	- \[R1](#r1)
 	- \[R0](#r0)
 - [Motivation And Scope](#motivation)
@@ -30,6 +31,9 @@ Table of Contents {#tableofcontents}
 
 [Changelog](#changelog)
 ========
+## R2 ## {#r2}
+- Add similarities to `std::span` in Motivation and Scope
+
 ## R1 ## {#r1}
 - Add more to Motivation and Scope
 - Add Technical Specifications
@@ -53,6 +57,10 @@ Having these 2 utility functions brings a couple of benefits:
 
 There is the argument of the `std::string` API already being far too large, and this being only a minor addition.
 Although this is true, the `std::string` API has some weird missing features, and the richness of the API is important, currently, programmers are often forced to make small utility functions themselves to do trivial operations on a string that should be part of the STL.
+
+There is also already existing similar functionality in `std::span`.
+`std::span::first` and `std::span::last` already exist and implement the feature proposed in this paper, even though there is also the `std::span::subspan` function, suggesting that `std::span::first()` and `std::span::last()` had enough interest to be added besides `std::span::subspan()`.
+I believe it should be the same treatment for `std::string` and `std::string_view`, which only have `.substr()`.
 
 Impact on the Standard {#impact}
 ========
