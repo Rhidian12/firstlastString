@@ -2014,7 +2014,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
   <div class="head">
    <p data-fill-with="logo"></p>
    <h1 class="p-name no-ref" id="title">DOCUMENT NUMBER? Adding .first() and .last() to strings</h1>
-   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Draft Proposal, <time class="dt-updated" datetime="2024-05-06">6 May 2024</time></span></h2>
+   <h2 class="no-num no-toc no-ref heading settled" id="profile-and-date"><span class="content">Draft Proposal, <time class="dt-updated" datetime="2024-05-13">13 May 2024</time></span></h2>
    <div data-fill-with="spec-metadata">
     <dl>
      <dt>This version:
@@ -2038,8 +2038,9 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     <li>
      <a href="#changelog"><span class="secno">2</span> <span class="content"><span>Changelog</span></span></a>
      <ol class="toc">
-      <li><a href="#r1"><span class="secno">2.1</span> <span class="content">R1</span></a>
-      <li><a href="#r0"><span class="secno">2.2</span> <span class="content">R0</span></a>
+      <li><a href="#r2"><span class="secno">2.1</span> <span class="content">R2</span></a>
+      <li><a href="#r1"><span class="secno">2.2</span> <span class="content">R1</span></a>
+      <li><a href="#r0"><span class="secno">2.3</span> <span class="content">R0</span></a>
      </ol>
     <li><a href="#motivation"><span class="secno">3</span> <span class="content">Motivation and Scope</span></a>
     <li><a href="#impact"><span class="secno">4</span> <span class="content">Impact on the Standard</span></a>
@@ -2062,6 +2063,8 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     <li data-md>
      <p><a href="#changelog">Changelog</a></p>
      <ul>
+      <li data-md>
+       <p><a href="#r2">R2</a></p>
       <li data-md>
        <p><a href="#r1">R1</a></p>
       <li data-md>
@@ -2091,7 +2094,12 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
      </ul>
    </ul>
    <h2 class="heading settled" data-level="2" id="changelog"><span class="secno">2. </span><span class="content"><a href="#changelog">Changelog</a></span><a class="self-link" href="#changelog"></a></h2>
-   <h3 class="heading settled" data-level="2.1" id="r1"><span class="secno">2.1. </span><span class="content">R1</span><a class="self-link" href="#r1"></a></h3>
+   <h3 class="heading settled" data-level="2.1" id="r2"><span class="secno">2.1. </span><span class="content">R2</span><a class="self-link" href="#r2"></a></h3>
+   <ul>
+    <li data-md>
+     <p>Add similarities to <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>span</c-></code> in Motivation and Scope</p>
+   </ul>
+   <h3 class="heading settled" data-level="2.2" id="r1"><span class="secno">2.2. </span><span class="content">R1</span><a class="self-link" href="#r1"></a></h3>
    <ul>
     <li data-md>
      <p>Add more to Motivation and Scope</p>
@@ -2100,7 +2108,7 @@ c-[il] { color: #000000 } /* Literal.Number.Integer.Long */
     <li data-md>
      <p>Add Proposed Wording</p>
    </ul>
-   <h3 class="heading settled" data-level="2.2" id="r0"><span class="secno">2.2. </span><span class="content">R0</span><a class="self-link" href="#r0"></a></h3>
+   <h3 class="heading settled" data-level="2.3" id="r0"><span class="secno">2.3. </span><span class="content">R0</span><a class="self-link" href="#r0"></a></h3>
    <ul>
     <li data-md>
      <p>Initial revision</p>
@@ -2121,6 +2129,8 @@ Having these 2 utility functions brings a couple of benefits:</p>
    </ol>
    <p>There is the argument of the <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>string</c-></code> API already being far too large, and this being only a minor addition.
 Although this is true, the <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>string</c-></code> API has some weird missing features, and the richness of the API is important, currently, programmers are often forced to make small utility functions themselves to do trivial operations on a string that should be part of the STL.</p>
+   <p>There is also already existing similar functionality in <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>span</c-></code>. <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>span</c-><c- o>::</c-><c- n>first</c-></code> and <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>span</c-><c- o>::</c-><c- n>last</c-></code> already exist and implement the feature proposed in this paper, even though there is also the <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>span</c-><c- o>::</c-><c- n>subspan</c-></code> function, suggesting that <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>span</c-><c- o>::</c-><c- n>first</c-><c- p>()</c-></code> and <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>span</c-><c- o>::</c-><c- n>last</c-><c- p>()</c-></code> had enough interest to be added besides <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>span</c-><c- o>::</c-><c- n>subspan</c-><c- p>()</c-></code>.
+I believe it should be the same treatment for <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>string</c-></code> and <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>string_view</c-></code>, which only have <code class="highlight"><c- p>.</c-><c- n>substr</c-><c- p>()</c-></code>.</p>
    <h2 class="heading settled" data-level="4" id="impact"><span class="secno">4. </span><span class="content">Impact on the Standard</span><a class="self-link" href="#impact"></a></h2>
     These are 2 minor utility functions to be added to the <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>string</c-></code> and <code class="highlight"><c- n>std</c-><c- o>::</c-><c- n>string_view</c-></code> API, not impacting any existing code, so the impact on the standard is minimal. 
    <h2 class="heading settled" data-level="5" id="technical"><span class="secno">5. </span><span class="content">Technical Specifications</span><a class="self-link" href="#technical"></a></h2>
