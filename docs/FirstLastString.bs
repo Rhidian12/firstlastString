@@ -75,10 +75,10 @@ These are 2 minor utility functions to be added to the `std::string` and `std::s
 
 Technical Specifications {#technical}
 ========
-1. `std::basic_string::first()` takes 1 parameter: `size_t count`, returns a `std::basic_string` and has a `noexcept` guarantee.
+1. `std::basic_string::first()` takes 1 parameter: `size_t count` and returns a `std::basic_string`.
 	- `count` is the amount of characters to included, starting from the start of the original string.
 		- Determines the effective length of `count` as `std::min(count, size())`
-2. `std::basic_string::last()` takes 1 parameter: `size_t count`, returns a `std::basic_string` and has a `noexcept` guarantee.
+2. `std::basic_string::last()` takes 1 parameter: `size_t count` and returns a `std::basic_string`.
 	- `count` is the amount of characters to be included, starting from the end of the original string.
 		- Determines the effective length of `count` as `std::min(count, size())`
 3. `std::basic_string_view::first()` takes 1 parameter: `size_t count`, returns a `std::basic_string_view` and has a `noexcept` guarantee.
