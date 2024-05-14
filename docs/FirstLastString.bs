@@ -6,7 +6,7 @@ Status: iso/D
 Group: EWG
 URL: TBA
 Editor: rhidiandewit@gmail.com
-Abstract: C++ has a lot of nice utility functions in its `std::string` library, but the richness of the API can be even more improved.
+Abstract: C++ has a lot of nice utility functions in its `std::string` library, but the richness of the API can be even more improved. This proposal aims to add `.first()` and `.last()` functions to easily access the first N and last N characters of a string.
 Markup Shorthands: markdown yes, css no
 Boilerplate: omit conformance, copyright no
 Default Highlight: cpp
@@ -15,6 +15,7 @@ Default Highlight: cpp
 Table of Contents {#tableofcontents}
 ========
 - [Changelog](#changelog)
+	- \[R3](#r3)
 	- \[R2](#r2)
 	- \[R1](#r1)
 	- \[R0](#r0)
@@ -31,6 +32,12 @@ Table of Contents {#tableofcontents}
 
 [Changelog](#changelog)
 ========
+## R3 ## {#r3}
+- Remove `noexcept` from `std::basic_string::first()` and `std::basic_string::last()`
+- Remove template parameters from proposed wording
+- Added a `const &` and `&&` overload for `std::basic_string::first()` and `std::basic_string::last()`
+- Adjust Abstract
+
 ## R2 ## {#r2}
 - Add similarities to `std::span` in Motivation and Scope
 
@@ -93,26 +100,29 @@ namespace std {
 	// [string.ops], string operations
 	// [...]
 	
-	constexpr basic_string first(size_t count) const noexcept;
-	constexpr basic_string last(size_t count) const noexcept;
+	constexpr basic_string first(size_t count) const &;
+	constexpr basic_string first(size_t count) &&;
+
+	constexpr basic_string last(size_t count) const &;
+	constexpr basic_string last(size_t count) &&;
 }
 ```
 
 ## `std::basic_string::first` ## {#basicstringfirst}
 Add the following subclause to 23.4.3.8 [string.ops](https://eel.is/c++draft/string.ops):<br>
 - 23.4.3.?:			`basic_string::first`			`[string.first]`
-	- `constexpr basic_string<charT, traits> first(size_t count) const noexcept;`
+	- `constexpr basic_string first(size_t count) const;`
 		1. *Effects*: Determines the effective length `xlen` of the string to be returned as `std::min(count, size())`.<br>
 			Returns the characters in the range `[data(), data() + xlen);`
-		2. *Returns*: `basic_string<charT, traits>(data(), data() + xlen)`
+		2. *Returns*: `basic_string(data(), data() + xlen)`
 
 ## `std::basic_string::last` ## {#basicstringlast}
 Add the following subclause to 23.4.3.8 [string.ops](https://eel.is/c++draft/string.ops):<br>
 - 23.4.3.?:			`basic_string::last`			`[string.last]`
-	- `constexpr basic_string<charT, traits> last(size_t count) const noexcept;`
+	- `constexpr basic_string last(size_t count) const;`
 		1. *Effects*: Determines the effective length `xlen` of the string to be returned as `std::min(count, size())`.<br>
 			Returns the characters in the range `[data() + size() - xlen, xlen);`
-		2. *Returns*: `basic_string<charT, traits>(data() + size() - xlen, data() + size())`
+		2. *Returns*: `basic_string(data() + size() - xlen, data() + size())`
 
 ## Addition to `<string_view>` ## {#additiontostringview}
 Add the following to 23.3.3.1 [string.view.template.general](https://eel.is/c++draft/string.view.template.general):<br>
@@ -132,15 +142,15 @@ namespace std {
 ## `std::basic_string_view::first` ## {#basicstringviewfirst}
 Add the following subclause to 23.3.3.8 [string.view.ops](https://eel.is/c++draft/string.view.ops):<br>
 - 23.3.3.?:			`basic_string_view::first`			`[string.first]`
-	- `constexpr basic_string_view<charT, traits> first(size_t count) const noexcept;`
+	- `constexpr basic_string_view first(size_t count) const noexcept;`
 		1. *Effects*: Determines the effective length `xlen` of the string to be returned as `std::min(count, size())`.<br>
 			Returns the characters in the range `[data(), data() + xlen);`
-		2. *Returns*: `basic_string_view<charT, traits>(data(), data() + xlen)`
+		2. *Returns*: `basic_string_view(data(), data() + xlen)`
 
 ## `std::basic_string_view::last` ## {#basicstringviewlast}
 Add the following subclause to 23.3.3.8 [string.view.ops](https://eel.is/c++draft/string.view.ops):<br>
 - 23.3.3.?:			`basic_string_view::last`			`[string.last]`
-	- `constexpr basic_string_view<charT, traits> last(size_t count) const noexcept;`
+	- `constexpr basic_string_view last(size_t count) const noexcept;`
 		1. *Effects*: Determines the effective length `xlen` of the string to be returned as `std::min(count, size())`.<br>
 			Returns the characters in the range `[data() + size() - xlen, xlen);`
-		2. *Returns*: `basic_string_view<charT, traits>(data() + size() - xlen, data() + size())`
+		2. *Returns*: `basic_string_view(data() + size() - xlen, data() + size())`
