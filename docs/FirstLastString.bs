@@ -1,5 +1,5 @@
 <pre class='metadata'>
-Title: DOCUMENT NUMBER? Adding .first() and .last() to strings
+Title: P3283. Adding .first() and .last() to strings
 Shortname: Adding .first() and .last() to strings
 Level: 0
 Status: iso/D
