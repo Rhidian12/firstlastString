@@ -3,7 +3,7 @@ Title: P3283. Adding .first() and .last() to strings
 Shortname: Adding .first() and .last() to strings
 Level: 0
 Status: iso/D
-Group: EWG
+Group: wg21
 URL: TBA
 Editor: rhidiandewit@gmail.com
 Abstract: C++ has a lot of nice utility functions in its `std::string` library, but the richness of the API can be even more improved. This proposal aims to add `.first()` and `.last()` functions to easily access the first N and last N characters of a string.
@@ -15,142 +15,117 @@ Default Highlight: cpp
 Table of Contents {#tableofcontents}
 ========
 - [Changelog](#changelog)
-	- \[R3](#r3)
-	- \[R2](#r2)
-	- \[R1](#r1)
-	- \[R0](#r0)
+	- [Revision 0](#rev0)
 - [Motivation And Scope](#motivation)
+	- [C++ Projects and Other Languages](#otherprojects)
+	- [Similarity to std::span](#spansimilarity)
 - [Impact on the Standard](#impact)
-- [Technical Specifications](#technical)
+- [Design Considerations](#design)
+	- [Should std::string return std::string_view](#stringreturnview)
+	- [Should first() and last() be bounds-checked or throw an exception](#boundschecking)
+	- [Should first() and last() be ref-qualified](#refqualified)
+	- [Why not add string-slicing](#stringslicing)
 - [Proposed Wording](#proposedwording)
 	- <span style="font-family:Georgia, serif;">[Addition to string](#additiontostring)</span>
-	- <span style="font-family:Georgia, serif;">[std::basic_string::first](#basicstringfirst)</span>
-	- <span style="font-family:Georgia, serif;">[std::basic_string::last](#basicstringlast)</span>
+		- [std::string::first()](#stringfirst)
+		- [std::string::last()](#stringlast)
 	- <span style="font-family:Georgia, serif;">[Addition to string_view](#additiontostringview)</span>
-	- <span style="font-family:Georgia, serif;">[std::basic_string_view::first](#basicstringviewfirst)</span>
-	- <span style="font-family:Georgia, serif;">[std::basic_string_view::last](#basicstringviewlast)</span>
+		- [std::string_view::first()](#stringviewfirst)
+		- [std::string_view::last()](#stringviewlast)
 
 [Changelog](#changelog)
 ========
-## R3 ## {#r3}
-- Remove `noexcept` from `std::basic_string::first()` and `std::basic_string::last()`
-- Remove template parameters from proposed wording
-- Added a `const &` and `&&` overload for `std::basic_string::first()` and `std::basic_string::last()`
-- Adjust Abstract
-
-## R2 ## {#r2}
-- Add similarities to `std::span` in Motivation and Scope
-
-## R1 ## {#r1}
-- Add more to Motivation and Scope
-- Add Technical Specifications
-- Add Proposed Wording
-
-## R0 ## {#r0}
+## Revision 0 ## {#rev0}
 - Initial revision
 
 Motivation and Scope {#motivation}
 ========
-The `std::string` (and `std::string_view`) api has a lot of nice features and utility functions, but can be improved even further.
-Currently, to get the first `N` characters of a string, we need to do `std::string::substr(0, N)`. This is fine, but people might be confused as to the usage of the `0` in the function call.
-Similarly, to get the last `N` characters of a string, we need to do `std::string::substr(size() - N, N)`. This is also fine, but again, the first parameter could lead to confusion, or even a possible error if the wrong number were passed.
+Getting the first and last X characters of a string is a common task and one that is possible with `substr()`, but would be made easier (and intent made clearer) with `first()` and `last()`.
 
-To facilitate these simple operations, I suggest adding `std::string::first()` and `std::string::last()` (and similar counterparts to `std::string_view`).
-Having these 2 utility functions brings a couple of benefits:
+## C++ Projects and Other Languages ## {#otherprojects}
+Other languages and projects already include similar if not identical functionality to `first()` and `last()`.
+- Unreal Engine 4 / 5: `FString::Left()` and `FString::Right()` are identical to the proposed `first()` and `last()`, returning the first X characters and last X characters, respectively.
+- Python: string slicing, although far more powerful, also allows the user to easily get the first X and last X characters.
+- C#: ranges operators. Similar to Python's string slicing, it allows for far more, but also accomodates very easy access to the first X and last X characters.
 
-1. It is more obvious and clear what the programmer intent is, `.first(N)` conveys better meaning as opposed to `.substr(0, N)`, same for `.last(N)` and `.substr(size() - N, N)`
-2. Since there are less arguments, and the argument is only a count, there is less potential for programmer error
-3. It is generally simpler and less typing.
-
-There is the argument of the `std::string` API already being far too large, and this being only a minor addition.
-Although this is true, the `std::string` API has some weird missing features, and the richness of the API is important, currently, programmers are often forced to make small utility functions themselves to do trivial operations on a string that should be part of the STL.
-
-There is also already existing similar functionality in `std::span`.
-`std::span::first` and `std::span::last` already exist and implement the feature proposed in this paper, even though there is also the `std::span::subspan` function, suggesting that `std::span::first()` and `std::span::last()` had enough interest to be added besides `std::span::subspan()`.
-I believe it should be the same treatment for `std::string` and `std::string_view`, which only have `.substr()`.
+## Similarity to std::span ## {#spansimilarity}
+`std::span` contains 2 almost identical functions to the proposed `first()` and `last()`: `std::span::first()` and `std::span::last()`, while also containing `std::span::subspan()`.
+This suggests that there was enough interest for a `first()` and `last()` in `std::span`, even though `subspan()` exists.
+It is only logical that `std::string` and `std::string_view` follow this logic by adding `first()` and `last()`.
 
 Impact on the Standard {#impact}
 ========
 These are 2 minor utility functions to be added to the `std::string` and `std::string_view` API, not impacting any existing code, so the impact on the standard is minimal.
 
-Technical Specifications {#technical}
+Design Considerations {#design}
 ========
-1. `std::basic_string::first()` takes 1 parameter: `size_t count` and returns a `std::basic_string`.
-	- `count` is the amount of characters to included, starting from the start of the original string.
-		- Determines the effective length of `count` as `std::min(count, size())`
-2. `std::basic_string::last()` takes 1 parameter: `size_t count` and returns a `std::basic_string`.
-	- `count` is the amount of characters to be included, starting from the end of the original string.
-		- Determines the effective length of `count` as `std::min(count, size())`
-3. `std::basic_string_view::first()` takes 1 parameter: `size_t count`, returns a `std::basic_string_view` and has a `noexcept` guarantee.
-	- `count` is the amount of characters to included, starting from the start of the original string_view.
-		- Determines the effective length of `count` as `std::min(count, size())`
-4. `std::basic_string_view::last()` takes 1 parameter: `size_t count`, returns a `std::basic_string_view` and has a `noexcept` guarantee.
-	- `count` is the amount of characters to be included, starting from the end of the original string_view.
-		- Determines the effective length of `count` as `std::min(count, size())`
+
+## Should std::string return std::string_view ## {#stringreturnview}
+`first()`and `last()` should return the datatype they are a part of, e.g. `std::string::first()` and `std::string::last()` should return `std::string` while the `std::string_view` functions should return `std::string_view`.<br>
+This is to keep consistency with the existing `std::string` and `std::string_view` API, which never mix and match the datatypes that are being returned.
+Any potential benefit that is gained by returning std::string_view is lost when compared to the illogical change in API in `std::string`.<br>
+In the case where a user would need a string_view, they could simply transform the string into a string_view, and call `first()` on that view: `std::string_view(s).first(x)`
+
+## Should first() and last() be bounds-checked or throw an exception ## {#boundschecking}
+It is best that `std::string::first()` and `std::string::last()` follow the current example set by `std::string::substr()` and `std::string_view::substr()` where the `count` parameter is defaulted to `npos` and
+the `count` parameter is automatically limited to `size()`.
+There is a potential benefit in throwing an exception if `count > size()`, however, the break in behaviour from the current API is more breaking and intrusive than automatically limiting the `count` parameter to `size()`.
+
+## Should first() and last() be ref-qualified ## {#refqualified}
+This is to keep consistency with `std::string::substr()` which is also ref-qualified. This also entails that `std::string_view::first()` and `std::string_view::last()` should not be ref-qualified.
+
+## Why not add string-slicing ## {#stringslicing}
+Python, C# and Rust all allow far more powerful and more convenient string manipulation in the form of string-slicing and ranges, respectively. Adding either of these features would require either a core language change,<br>
+or a new binary `[]` operator, which could be useful for all containers, such as `std::vector`, which would require more work and investigation.<br>
+Therefore, it is the purpose of this proposal to, for now, add 2 small utility functions, and leave such matters for a later time.
 
 Proposed Wording {#proposedwording}
 ========
 ## Addition to `<string>` ## {#additiontostring}
-Add the following to 23.4.3.1 [basic.string.general](https://eel.is/c++draft/basic.string.general):<br>
+Add the following to [basic.string](https://eel.is/c++draft/string.substr):<br>
 ```
-// [...]
-namespace std {
-	// [...]
-	
-	// [string.ops], string operations
-	// [...]
-	
-	constexpr basic_string first(size_t count) const &;
-	constexpr basic_string first(size_t count) &&;
+constexpr basic_string first(size_t count) const &;
+constexpr basic_string first(size_t count) &&;
 
-	constexpr basic_string last(size_t count) const &;
-	constexpr basic_string last(size_t count) &&;
-}
+constexpr basic_string last(size_t count) const &;
+constexpr basic_string last(size_t count) &&;
 ```
 
-## `std::basic_string::first` ## {#basicstringfirst}
-Add the following subclause to 23.4.3.8 [string.ops](https://eel.is/c++draft/string.ops):<br>
-- 23.4.3.?:			`basic_string::first`			`[string.first]`
-	- `constexpr basic_string first(size_t count) const;`
-		1. *Effects*: Determines the effective length `xlen` of the string to be returned as `std::min(count, size())`.<br>
-			Returns the characters in the range `[data(), data() + xlen);`
-		2. *Returns*: `basic_string(data(), data() + xlen)`
+## [std::string::first()] ## {#stringfirst}
+Add the following to [string.substr](https://eel.is/c++draft/string.substr):<br>
+```
+constexpr basic_string first(size_t count) const &;
+constexpr basic_string first(size_t count) &&;
+```
+Effects: Equivalent to: `return substr(0, count)`<br>
+Effects: Equivalent to: `return std::move(*this).substr(0, count)`<br>
 
-## `std::basic_string::last` ## {#basicstringlast}
-Add the following subclause to 23.4.3.8 [string.ops](https://eel.is/c++draft/string.ops):<br>
-- 23.4.3.?:			`basic_string::last`			`[string.last]`
-	- `constexpr basic_string last(size_t count) const;`
-		1. *Effects*: Determines the effective length `xlen` of the string to be returned as `std::min(count, size())`.<br>
-			Returns the characters in the range `[data() + size() - xlen, xlen);`
-		2. *Returns*: `basic_string(data() + size() - xlen, data() + size())`
+## [std::string::last()] ## {#stringlast}
+Add the following to [string.substr](https://eel.is/c++draft/string.substr):<br>
+```
+constexpr basic_string last(size_t count) const &;
+constexpr basic_string last(size_t count) &&;
+```
+Effects: Equivalent to: `return substr(size() - min(count, size()))`<br>
+Effects: Equivalent to: `return std::move(*this).substr(size() - min(count, size()))`<br>
 
 ## Addition to `<string_view>` ## {#additiontostringview}
-Add the following to 23.3.3.1 [string.view.template.general](https://eel.is/c++draft/string.view.template.general):<br>
+Add the following to [string.view.template](https://eel.is/c++draft/string.view.template):<br>
 ```
-// [...]
-namespace std {
-	// [...]
-	
-	// [string.ops], string operations
-	// [...]
-	
-	constexpr basic_string_view first(size_t count) const noexcept;
-	constexpr basic_string_view last(size_t count) const noexcept;
-}
+	constexpr basic_string_view first(size_t count) const;
+	constexpr basic_string_view last(size_t count) const;
 ```
 
-## `std::basic_string_view::first` ## {#basicstringviewfirst}
-Add the following subclause to 23.3.3.8 [string.view.ops](https://eel.is/c++draft/string.view.ops):<br>
-- 23.3.3.?:			`basic_string_view::first`			`[string.first]`
-	- `constexpr basic_string_view first(size_t count) const noexcept;`
-		1. *Effects*: Determines the effective length `xlen` of the string to be returned as `std::min(count, size())`.<br>
-			Returns the characters in the range `[data(), data() + xlen);`
-		2. *Returns*: `basic_string_view(data(), data() + xlen)`
+## [std::string_view::first()] ## {#stringviewfirst}
+Add the following to [string.view.ops](https://eel.is/c++draft/string.view.ops):<br>
+```
+constexpr basic_string_view first(size_t count) const;
+```
+Effects: Equivalent to: `return substr(0, count)`
 
-## `std::basic_string_view::last` ## {#basicstringviewlast}
-Add the following subclause to 23.3.3.8 [string.view.ops](https://eel.is/c++draft/string.view.ops):<br>
-- 23.3.3.?:			`basic_string_view::last`			`[string.last]`
-	- `constexpr basic_string_view last(size_t count) const noexcept;`
-		1. *Effects*: Determines the effective length `xlen` of the string to be returned as `std::min(count, size())`.<br>
-			Returns the characters in the range `[data() + size() - xlen, xlen);`
-		2. *Returns*: `basic_string_view(data() + size() - xlen, data() + size())`
+## [std::string_view::last()] ## {#stringviewlast}
+Add the following to [string.view.ops](https://eel.is/c++draft/string.view.ops):<br>
+```
+constexpr basic_string_view last(size_t count) const;
+```
+Effects: Equivalent to: `return substr(size() - min(count, size()))`
