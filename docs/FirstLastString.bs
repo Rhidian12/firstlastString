@@ -79,53 +79,64 @@ Python, C# and Rust all allow far more powerful and more convenient string manip
 or a new binary `[]` operator, which could be useful for all containers, such as `std::vector`, which would require more work and investigation.<br>
 Therefore, it is the purpose of this proposal to, for now, add 2 small utility functions, and leave such matters for a later time.
 
+<style>
+/* CSS to underline and make the text green */
+.green-underline {
+    color: green;
+    text-decoration: underline;
+}
+</style>
+
 Proposed Wording {#proposedwording}
 ========
 ## Addition to `<string>` ## {#additiontostring}
 Add the following to [basic.string](https://eel.is/c++draft/string.substr):<br>
-```
-constexpr basic_string first(size_t count) const &;
-constexpr basic_string first(size_t count) &&;
-
-constexpr basic_string last(size_t count) const &;
-constexpr basic_string last(size_t count) &&;
-```
+<p class="green-underline"><code>
+constexpr basic_string first(size_t count) const &;<br>
+constexpr basic_string first(size_t count) &&;<br>
+constexpr basic_string last(size_t count) const &;<br>
+constexpr basic_string last(size_t count) &&;<br>
+</code>
 
 ## [std::string::first()] ## {#stringfirst}
 Add the following to [string.substr](https://eel.is/c++draft/string.substr):<br>
-```
-constexpr basic_string first(size_t count) const &;
-constexpr basic_string first(size_t count) &&;
-```
+<p class="green-underline"><code>
+constexpr basic_string first(size_t count) const &;<br>
+constexpr basic_string first(size_t count) &&;<br>
+</code>
+
 Effects: Equivalent to: `return substr(0, count)`<br>
 Effects: Equivalent to: `return std::move(*this).substr(0, count)`<br>
 
 ## [std::string::last()] ## {#stringlast}
 Add the following to [string.substr](https://eel.is/c++draft/string.substr):<br>
-```
-constexpr basic_string last(size_t count) const &;
-constexpr basic_string last(size_t count) &&;
-```
+<p class="green-underline"><code>
+constexpr basic_string last(size_t count) const &;<br>
+constexpr basic_string last(size_t count) &&;<br>
+</code>
+
 Effects: Equivalent to: `return substr(size() - min(count, size()))`<br>
 Effects: Equivalent to: `return std::move(*this).substr(size() - min(count, size()))`<br>
 
 ## Addition to `<string_view>` ## {#additiontostringview}
 Add the following to [string.view.template](https://eel.is/c++draft/string.view.template):<br>
-```
-	constexpr basic_string_view first(size_t count) const;
-	constexpr basic_string_view last(size_t count) const;
-```
+<p class="green-underline"><code>
+constexpr basic_string_view first(size_t count) const;<br>
+constexpr basic_string_view last(size_t count) const;
+</code>
 
 ## [std::string_view::first()] ## {#stringviewfirst}
 Add the following to [string.view.ops](https://eel.is/c++draft/string.view.ops):<br>
-```
+<p class="green-underline"><code>
 constexpr basic_string_view first(size_t count) const;
-```
+</code>
+
 Effects: Equivalent to: `return substr(0, count)`
 
 ## [std::string_view::last()] ## {#stringviewlast}
 Add the following to [string.view.ops](https://eel.is/c++draft/string.view.ops):<br>
-```
+<p class="green-underline"><code>
 constexpr basic_string_view last(size_t count) const;
-```
+</code>
+
 Effects: Equivalent to: `return substr(size() - min(count, size()))`
